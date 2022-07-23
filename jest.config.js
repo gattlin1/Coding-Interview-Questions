@@ -1,0 +1,9 @@
+/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
+module.exports = {
+  roots: ['./src'],
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  coverageDirectory: 'coverage',
+  verbose: true,
+  testPathIgnorePatterns: ['/node_modules/'],
+};
