@@ -12,7 +12,6 @@ export function removeDups(head: Node<number> | null): Node<number> | null {
     const next: Node<number> | null = curr.next;
 
     if (duplicates.has(curr.val!)) {
-      const next: Node<number> | null = curr.next;
       prev.next = next;
     } else {
       duplicates.set(curr.val!, true);
