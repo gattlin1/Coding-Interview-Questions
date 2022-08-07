@@ -1,10 +1,12 @@
 class TrieNode {
   val: string;
   private children: Map<string, TrieNode>;
+  isEndOfWord: boolean;
 
   constructor(val: string) {
     this.val = val;
     this.children = new Map();
+    this.isEndOfWord = false;
   }
 
   addChild(child: string) {
@@ -41,7 +43,7 @@ class Trie {
       curr = curr.getChild(word[i]);
     }
 
-    curr.addChild('*');
+    curr.isEndOfWord = true;
   }
 
   search(word: string): boolean {
@@ -50,7 +52,7 @@ class Trie {
       if (!curr.hasChild(char)) return false;
       curr = curr.getChild(char);
     }
-    return curr.hasChild('*');
+    return curr.isEndOfWord;
   }
 
   startsWith(prefix: string): boolean {
