@@ -1,16 +1,14 @@
 class TrieNode {
-  val: string;
   private children: Map<string, TrieNode>;
   isEndOfWord: boolean;
 
-  constructor(val: string) {
-    this.val = val;
+  constructor() {
     this.children = new Map();
     this.isEndOfWord = false;
   }
 
   addChild(child: string) {
-    this.children.set(child, new TrieNode(child));
+    this.children.set(child, new TrieNode());
   }
 
   hasChild(child: string): boolean {
@@ -24,30 +22,26 @@ class TrieNode {
 }
 
 class Trie {
-  private head: TrieNode;
+  private root: TrieNode;
 
   constructor() {
-    this.head = new TrieNode('*');
+    this.root = new TrieNode();
   }
 
   insert(word: string): void {
-    let curr = this.head;
-    let i = 0;
-    while (i < word.length && curr.hasChild(word[i])) {
-      curr = curr.getChild(word[i]);
-      i++;
-    }
-
-    for (; i < word.length; i++) {
-      curr.addChild(word[i]);
-      curr = curr.getChild(word[i]);
+    let curr = this.root;
+    for (const char of word) {
+      if (!curr.hasChild(char)) {
+        curr.addChild(char);
+      }
+      curr = curr.getChild(char);
     }
 
     curr.isEndOfWord = true;
   }
 
   search(word: string): boolean {
-    let curr = this.head;
+    let curr = this.root;
     for (const char of word) {
       if (!curr.hasChild(char)) return false;
       curr = curr.getChild(char);
@@ -56,13 +50,11 @@ class Trie {
   }
 
   startsWith(prefix: string): boolean {
-    let curr = this.head;
-    let i = 0;
-    for (; i < prefix.length; i++) {
-      if (!curr.hasChild(prefix[i])) return false;
-      curr = curr.getChild(prefix[i]);
+    let curr = this.root;
+    for (const char of prefix) {
+      if (!curr.hasChild(char)) return false;
+      curr = curr.getChild(char);
     }
-
-    return i === prefix.length;
+    return true;
   }
 }
